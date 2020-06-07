@@ -1,5 +1,6 @@
 #pragma once
-
+#include "Persona.h"
+#include "ArbolBB.h"
 namespace TF {
 
 	using namespace System;
@@ -14,6 +15,13 @@ namespace TF {
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
+	private:
+		Arbol<Persona>* principal;
+		Arbol<Persona>* columna1;
+		Arbol<Persona>* columna2;
+		Arbol<Persona>* columna3;
+		Arbol<Persona>* columna4;
+
 	public:
 		MyForm(void)
 		{
@@ -303,6 +311,7 @@ namespace TF {
 			this->Table->TabIndex = 23;
 			this->Table->UseCompatibleStateImageBehavior = false;
 			this->Table->View = System::Windows::Forms::View::Details;
+			this->Table->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::Table_SelectedIndexChanged);
 			// 
 			// cNombre
 			// 
@@ -368,5 +377,7 @@ namespace TF {
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 
+private: System::Void Table_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
