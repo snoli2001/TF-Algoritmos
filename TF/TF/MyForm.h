@@ -20,7 +20,12 @@ namespace TF {
 		Arbol<Persona>* columna1;
 		Arbol<Persona>* columna2;
 		Arbol<Persona>* columna3;
-		Arbol<Persona>* columna4;
+	private: System::Windows::Forms::TextBox^ InputElim;
+	private: System::Windows::Forms::Label^ letrasEliminacion;
+
+
+
+		   Arbol<Persona>* columna4;
 
 	public:
 		MyForm(void)
@@ -117,11 +122,13 @@ namespace TF {
 			this->cSexo = (gcnew System::Windows::Forms::ColumnHeader());
 			this->cEdad = (gcnew System::Windows::Forms::ColumnHeader());
 			this->cNumero = (gcnew System::Windows::Forms::ColumnHeader());
+			this->InputElim = (gcnew System::Windows::Forms::TextBox());
+			this->letrasEliminacion = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// Insertar
 			// 
-			this->Insertar->Location = System::Drawing::Point(66, 166);
+			this->Insertar->Location = System::Drawing::Point(77, 166);
 			this->Insertar->Name = L"Insertar";
 			this->Insertar->Size = System::Drawing::Size(75, 23);
 			this->Insertar->TabIndex = 0;
@@ -130,7 +137,7 @@ namespace TF {
 			// 
 			// Eliminar
 			// 
-			this->Eliminar->Location = System::Drawing::Point(66, 250);
+			this->Eliminar->Location = System::Drawing::Point(77, 279);
 			this->Eliminar->Name = L"Eliminar";
 			this->Eliminar->Size = System::Drawing::Size(75, 23);
 			this->Eliminar->TabIndex = 1;
@@ -341,11 +348,30 @@ namespace TF {
 			this->cNumero->Text = L"Numero";
 			this->cNumero->Width = 54;
 			// 
+			// InputElim
+			// 
+			this->InputElim->Location = System::Drawing::Point(45, 253);
+			this->InputElim->Name = L"InputElim";
+			this->InputElim->Size = System::Drawing::Size(136, 20);
+			this->InputElim->TabIndex = 24;
+			// 
+			// letrasEliminacion
+			// 
+			this->letrasEliminacion->AutoSize = true;
+			this->letrasEliminacion->Location = System::Drawing::Point(42, 237);
+			this->letrasEliminacion->Name = L"letrasEliminacion";
+			this->letrasEliminacion->Size = System::Drawing::Size(145, 13);
+			this->letrasEliminacion->TabIndex = 25;
+			this->letrasEliminacion->Text = L"Ingrese el numero del registro";
+			this->letrasEliminacion->Click += gcnew System::EventHandler(this, &MyForm::label5_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(810, 512);
+			this->Controls->Add(this->letrasEliminacion);
+			this->Controls->Add(this->InputElim);
 			this->Controls->Add(this->Table);
 			this->Controls->Add(this->textBox5);
 			this->Controls->Add(this->label1);
@@ -378,6 +404,8 @@ namespace TF {
 	}
 
 private: System::Void Table_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label5_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

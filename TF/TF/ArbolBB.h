@@ -13,7 +13,7 @@ private:
 	bool _buscar(Nodo<T>* nodo, T e) {
 		if (nodo == nullptr) return false;
 		else {
-			int r = comparar(nodo->elemento, e);
+			int r = comparar(nodo->valComparativo, e);
 			if (r == 0) return true;
 			else if (r < 0) {
 				return _buscar(nodo->der, e);
@@ -26,7 +26,7 @@ private:
 	Nodo<T>* _obtener(Nodo<T>* nodo, T e) {
 		if (nodo == nullptr) return nullptr;
 		else {
-			int r = comparar(nodo->elemento, e);
+			int r = comparar(nodo->valComparativo, e);
 			if (r == 0) return nodo;
 			else if (r < 0) {
 				return _buscar(nodo->der, e);
@@ -39,11 +39,11 @@ private:
 	bool _insertar(Nodo<T>*& nodo, T e) {
 		if (nodo == nullptr) {
 			nodo = new Nodo<T>();
-			nodo->elemento = e;
+			nodo->valComparativo = e;
 			return true;
 		}
 		else {
-			int r = comparar(nodo->elemento, e);
+			int r = comparar(nodo->valComparativo, e);
 			if (r == 0) return false;
 			else if (r < 0) {
 				return _insertar(nodo->der, e);
@@ -56,13 +56,13 @@ private:
 	void _enOrden(Nodo<T>* nodo) {
 		if (nodo == nullptr) return;
 		_enOrden(nodo->izq);
-		procesar(nodo->elemento);
+		procesar(nodo->valComparativo);
 		_enOrden(nodo->der);
 	}
 
 	void _preOrden(Nodo<T>* nodo) {
 		if (nodo == nullptr) return;
-		procesar(nodo->elemento);
+		procesar(nodo->valComparativo);
 		_preOrden(nodo->izq);
 		_preOrden(nodo->der);
 	}
@@ -71,7 +71,7 @@ private:
 		if (nodo == nullptr) return;
 		_postOrden(nodo->izq);
 		_postOrden(nodo->der);
-		procesar(nodo->elemento);
+		procesar(nodo->valComparativo);
 	}
 	bool _vacio() {
 		return raiz == nullptr;
@@ -103,19 +103,19 @@ private:
 	}
 
 	int _minimo(Nodo<T>* nodo) {
-		if (nodo->izq == nullptr) return nodo->elemento;
+		if (nodo->izq == nullptr) return nodo->valComparativo;
 		else
 			return _minimo(nodo->izq);
 	}
 	int _maximo(Nodo<T>* nodo) {
-		if (nodo->der == nullptr) return nodo->elemento;
+		if (nodo->der == nullptr) return nodo->valComparativo;
 		else
 			return _maximo(nodo->der);
 	}
 	bool _eliminar(Nodo<T>*& nodo, T e) {
 		if (nodo == nullptr) return false;
 		else {
-			int r = comparar(nodo->elemento, e);
+			int r = comparar(nodo->valComparativo, e);
 			if (r < 0) {
 				return _eliminar(nodo->der, e);
 			}
@@ -142,8 +142,8 @@ private:
 					{
 						aux = aux->izq; 
 					}
-					nodo->elemento = aux->elemento; 
-					return _eliminar(nodo->der, aux->elemento); 
+					nodo->valComparativo = aux->valComparativo; 
+					return _eliminar(nodo->der, aux->valComparativo); 
 				}
 			}
 		}

@@ -3,7 +3,8 @@
 template <class T>
 class Nodo {
 public:
-	T val;
+	T valComparativo;
+	T registro;
 	Nodo<T> izq;
 	Nodo<T> der;
 
