@@ -8,4 +8,9 @@ public:
 	Nodo<T> izq;
 	Nodo<T> der;
 
+	Nodo() {
+		izq = nullptr;
+		der = nullptr;
+	}
+
 };
