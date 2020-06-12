@@ -1,6 +1,7 @@
 #pragma once
-#include "Persona.h"
-#include "ArbolBB.h"
+#include <msclr\marshal_cppstd.h>
+#include <list>
+#include<iterator>
 namespace TF {
 
 	using namespace System;
@@ -16,11 +17,9 @@ namespace TF {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	private:
-		Arbol<Persona>* principal;
-		Arbol<Persona>* columna1;
-		Arbol<Persona>* columna2;
-		Arbol<Persona>* columna3;
-		Arbol<Persona>* columna4;
+
+		//Arbol<Persona>* principal = new Arbol<Persona>();
+		//Arbol<Persona>* columna1;
 
 	public:
 		MyForm(void)
@@ -127,6 +126,8 @@ namespace TF {
 			this->Insertar->TabIndex = 0;
 			this->Insertar->Text = L"Insertar";
 			this->Insertar->UseVisualStyleBackColor = true;
+			this->Insertar->Click += gcnew System::EventHandler(this, &MyForm::Insertar_Click);
+			this->Insertar->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::Insertar_MouseUp);
 			// 
 			// Eliminar
 			// 
@@ -369,15 +370,29 @@ namespace TF {
 			this->Controls->Add(this->Insertar);
 			this->Name = L"MyForm";
 			this->Text = L"Mini-SGDB";
+			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+
 	}
 
 private: System::Void Table_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void Insertar_Click(System::Object^ sender, System::EventArgs^ e) {
+
+
+	
+
+
+}
+private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void Insertar_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+
 }
 };
 }

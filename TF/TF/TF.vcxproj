@@ -134,15 +134,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Codigo.cpp" />
+    <ClCompile Include="Edad.cpp" />
+    <ClCompile Include="Equipo.cpp" />
     <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="Nombre.cpp" />
+    <ClCompile Include="Numero.cpp" />
+    <ClCompile Include="Sexo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArbolBB.h" />
+    <ClInclude Include="Edad.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Equipo.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Nodo.h" />
-    <ClInclude Include="Persona.h" />
+    <ClInclude Include="Nombre.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Numero.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Sexo.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
