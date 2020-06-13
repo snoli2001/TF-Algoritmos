@@ -1,7 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include <msclr\marshal_cppstd.h>
 #include <list>
 #include<iterator>
+#include "Edad.h"
+#include "Equipo.h"
+#include "Nombre.h"
+#include "Numero.h"
+#include "Sexo.h"
+#include "Tabla.h"
+#include "FuncionesArchivo.h"
+#include "FuncionesMenu.h"
+
 namespace TF {
 
 	using namespace System;
@@ -17,24 +26,25 @@ namespace TF {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	private:
+		Table* tabla = NULL;
 
-		//Arbol<Persona>* principal = new Arbol<Persona>();
-		//Arbol<Persona>* columna1;
 
 	public:
 		MyForm(void)
 		{
 			InitializeComponent();
 			//
-			//TODO: agregar código de constructor aquí
+			//TODO: agregar cï¿½digo de constructor aquï¿½
 			//
-			
-			
+			if (tabla != NULL)
+				delete tabla;
+			tabla = generarDataFrame();
+			LLenarTabla();
 		}
 
 	protected:
 		/// <summary>
-		/// Limpiar los recursos que se estén usando.
+		/// Limpiar los recursos que se estï¿½n usando.
 		/// </summary>
 		~MyForm()
 		{
@@ -46,76 +56,85 @@ namespace TF {
 	private: System::Windows::Forms::Button^ Insertar;
 	protected:
 	private: System::Windows::Forms::Button^ Eliminar;
-	private: System::Windows::Forms::Button^ Filtros;
+	private: System::Windows::Forms::Button^ FNombre;
 
 
 
-	private: System::Windows::Forms::CheckBox^ checkBox1;
-	private: System::Windows::Forms::CheckBox^ checkBox2;
-	private: System::Windows::Forms::CheckBox^ checkBox3;
-	private: System::Windows::Forms::CheckBox^ checkBox4;
-	private: System::Windows::Forms::CheckBox^ checkBox5;
-	private: System::Windows::Forms::CheckBox^ checkBox6;
-	private: System::Windows::Forms::CheckBox^ checkBox7;
+
+
+
+
+
+
+
+
 
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::TextBox^ textBox4;
-	private: System::Windows::Forms::Label^ Numero;
+	private: System::Windows::Forms::Label^ LName;
+
 
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::TextBox^ textBox5;
-	private: System::Windows::Forms::ListView^ Table;
+	private: System::Windows::Forms::ListView^ TableF;
+
 	private: System::Windows::Forms::ColumnHeader^ cNombre;
 	private: System::Windows::Forms::ColumnHeader^ cEquipo;
 	private: System::Windows::Forms::ColumnHeader^ cSexo;
 	private: System::Windows::Forms::ColumnHeader^ cEdad;
 	private: System::Windows::Forms::ColumnHeader^ cNumero;
+	private: System::Windows::Forms::Button^ FEquipo;
+	private: System::Windows::Forms::Button^ fNum;
+
+	private: System::Windows::Forms::Button^ FSexo;
+	private: System::Windows::Forms::Button^ FEdad;
+	private: System::Windows::Forms::ComboBox^ comboBox1;
+	private: System::Windows::Forms::Label^ label5;
 
 
 	private:
 		/// <summary>
-		/// Variable del diseñador necesaria.
+		/// Variable del diseï¿½ador necesaria.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
+		/// Mï¿½todo necesario para admitir el Diseï¿½ador. No se puede modificar
+		/// el contenido de este mï¿½todo con el editor de cï¿½digo.
 		/// </summary>
 		void InitializeComponent(void)
 		{
 			this->Insertar = (gcnew System::Windows::Forms::Button());
 			this->Eliminar = (gcnew System::Windows::Forms::Button());
-			this->Filtros = (gcnew System::Windows::Forms::Button());
-			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox3 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox4 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox5 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox6 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox7 = (gcnew System::Windows::Forms::CheckBox());
+			this->FNombre = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->Numero = (gcnew System::Windows::Forms::Label());
+			this->LName = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
-			this->Table = (gcnew System::Windows::Forms::ListView());
+			this->TableF = (gcnew System::Windows::Forms::ListView());
 			this->cNombre = (gcnew System::Windows::Forms::ColumnHeader());
 			this->cEquipo = (gcnew System::Windows::Forms::ColumnHeader());
 			this->cSexo = (gcnew System::Windows::Forms::ColumnHeader());
 			this->cEdad = (gcnew System::Windows::Forms::ColumnHeader());
 			this->cNumero = (gcnew System::Windows::Forms::ColumnHeader());
+			this->FEquipo = (gcnew System::Windows::Forms::Button());
+			this->fNum = (gcnew System::Windows::Forms::Button());
+			this->FSexo = (gcnew System::Windows::Forms::Button());
+			this->FEdad = (gcnew System::Windows::Forms::Button());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// Insertar
@@ -131,92 +150,22 @@ namespace TF {
 			// 
 			// Eliminar
 			// 
-			this->Eliminar->Location = System::Drawing::Point(66, 250);
+			this->Eliminar->Location = System::Drawing::Point(66, 262);
 			this->Eliminar->Name = L"Eliminar";
 			this->Eliminar->Size = System::Drawing::Size(75, 23);
 			this->Eliminar->TabIndex = 1;
 			this->Eliminar->Text = L"Eliminar";
 			this->Eliminar->UseVisualStyleBackColor = true;
 			// 
-			// Filtros
+			// FNombre
 			// 
-			this->Filtros->Location = System::Drawing::Point(400, 114);
-			this->Filtros->Name = L"Filtros";
-			this->Filtros->Size = System::Drawing::Size(128, 23);
-			this->Filtros->TabIndex = 2;
-			this->Filtros->Text = L"Aplicar Filtros";
-			this->Filtros->UseVisualStyleBackColor = true;
-			this->Filtros->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
-			// 
-			// checkBox1
-			// 
-			this->checkBox1->AutoSize = true;
-			this->checkBox1->Location = System::Drawing::Point(344, 33);
-			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(58, 17);
-			this->checkBox1->TabIndex = 5;
-			this->checkBox1->Text = L"Igual a";
-			this->checkBox1->UseVisualStyleBackColor = true;
-			// 
-			// checkBox2
-			// 
-			this->checkBox2->AutoSize = true;
-			this->checkBox2->Location = System::Drawing::Point(344, 57);
-			this->checkBox2->Name = L"checkBox2";
-			this->checkBox2->Size = System::Drawing::Size(72, 17);
-			this->checkBox2->TabIndex = 6;
-			this->checkBox2->Text = L"Inicia con";
-			this->checkBox2->UseVisualStyleBackColor = true;
-			// 
-			// checkBox3
-			// 
-			this->checkBox3->AutoSize = true;
-			this->checkBox3->Location = System::Drawing::Point(344, 81);
-			this->checkBox3->Name = L"checkBox3";
-			this->checkBox3->Size = System::Drawing::Size(82, 17);
-			this->checkBox3->TabIndex = 7;
-			this->checkBox3->Text = L"Finaliza con";
-			this->checkBox3->UseVisualStyleBackColor = true;
-			// 
-			// checkBox4
-			// 
-			this->checkBox4->AutoSize = true;
-			this->checkBox4->Location = System::Drawing::Point(431, 32);
-			this->checkBox4->Name = L"checkBox4";
-			this->checkBox4->Size = System::Drawing::Size(112, 17);
-			this->checkBox4->TabIndex = 8;
-			this->checkBox4->Text = L"Esta contenido en";
-			this->checkBox4->UseVisualStyleBackColor = true;
-			// 
-			// checkBox5
-			// 
-			this->checkBox5->AutoSize = true;
-			this->checkBox5->Location = System::Drawing::Point(431, 57);
-			this->checkBox5->Name = L"checkBox5";
-			this->checkBox5->Size = System::Drawing::Size(128, 17);
-			this->checkBox5->TabIndex = 9;
-			this->checkBox5->Text = L"No esta contenido en";
-			this->checkBox5->UseVisualStyleBackColor = true;
-			// 
-			// checkBox6
-			// 
-			this->checkBox6->AutoSize = true;
-			this->checkBox6->Location = System::Drawing::Point(431, 81);
-			this->checkBox6->Name = L"checkBox6";
-			this->checkBox6->Size = System::Drawing::Size(55, 17);
-			this->checkBox6->TabIndex = 10;
-			this->checkBox6->Text = L"Mayor";
-			this->checkBox6->UseVisualStyleBackColor = true;
-			// 
-			// checkBox7
-			// 
-			this->checkBox7->AutoSize = true;
-			this->checkBox7->Location = System::Drawing::Point(549, 33);
-			this->checkBox7->Name = L"checkBox7";
-			this->checkBox7->Size = System::Drawing::Size(56, 17);
-			this->checkBox7->TabIndex = 11;
-			this->checkBox7->Text = L"Menor";
-			this->checkBox7->UseVisualStyleBackColor = true;
+			this->FNombre->Location = System::Drawing::Point(296, 29);
+			this->FNombre->Name = L"FNombre";
+			this->FNombre->Size = System::Drawing::Size(89, 23);
+			this->FNombre->TabIndex = 2;
+			this->FNombre->Text = L"Filtros Nombre";
+			this->FNombre->UseVisualStyleBackColor = true;
+			this->FNombre->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
 			// 
 			// textBox1
 			// 
@@ -246,14 +195,14 @@ namespace TF {
 			this->textBox4->Size = System::Drawing::Size(136, 20);
 			this->textBox4->TabIndex = 16;
 			// 
-			// Numero
+			// LName
 			// 
-			this->Numero->AutoSize = true;
-			this->Numero->Location = System::Drawing::Point(29, 29);
-			this->Numero->Name = L"Numero";
-			this->Numero->Size = System::Drawing::Size(44, 13);
-			this->Numero->TabIndex = 17;
-			this->Numero->Text = L"Nombre";
+			this->LName->AutoSize = true;
+			this->LName->Location = System::Drawing::Point(29, 29);
+			this->LName->Name = L"LName";
+			this->LName->Size = System::Drawing::Size(44, 13);
+			this->LName->TabIndex = 17;
+			this->LName->Text = L"Nombre";
 			// 
 			// label2
 			// 
@@ -298,21 +247,21 @@ namespace TF {
 			this->textBox5->Size = System::Drawing::Size(136, 20);
 			this->textBox5->TabIndex = 22;
 			// 
-			// Table
+			// TableF
 			// 
-			this->Table->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(5) {
+			this->TableF->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(5) {
 				this->cNombre, this->cEquipo,
 					this->cSexo, this->cEdad, this->cNumero
 			});
-			this->Table->GridLines = true;
-			this->Table->HideSelection = false;
-			this->Table->Location = System::Drawing::Point(296, 218);
-			this->Table->Name = L"Table";
-			this->Table->Size = System::Drawing::Size(493, 253);
-			this->Table->TabIndex = 23;
-			this->Table->UseCompatibleStateImageBehavior = false;
-			this->Table->View = System::Windows::Forms::View::Details;
-			this->Table->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::Table_SelectedIndexChanged);
+			this->TableF->GridLines = true;
+			this->TableF->HideSelection = false;
+			this->TableF->Location = System::Drawing::Point(296, 218);
+			this->TableF->Name = L"TableF";
+			this->TableF->Size = System::Drawing::Size(493, 253);
+			this->TableF->TabIndex = 23;
+			this->TableF->UseCompatibleStateImageBehavior = false;
+			this->TableF->View = System::Windows::Forms::View::Details;
+			this->TableF->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::Table_SelectedIndexChanged);
 			// 
 			// cNombre
 			// 
@@ -342,30 +291,87 @@ namespace TF {
 			this->cNumero->Text = L"Numero";
 			this->cNumero->Width = 54;
 			// 
+			// FEquipo
+			// 
+			this->FEquipo->Location = System::Drawing::Point(391, 29);
+			this->FEquipo->Name = L"FEquipo";
+			this->FEquipo->Size = System::Drawing::Size(83, 23);
+			this->FEquipo->TabIndex = 24;
+			this->FEquipo->Text = L"Filtros Equipo";
+			this->FEquipo->UseVisualStyleBackColor = true;
+			this->FEquipo->Click += gcnew System::EventHandler(this, &MyForm::FEquipo_Click);
+			// 
+			// fNum
+			// 
+			this->fNum->Location = System::Drawing::Point(676, 29);
+			this->fNum->Name = L"fNum";
+			this->fNum->Size = System::Drawing::Size(75, 23);
+			this->fNum->TabIndex = 25;
+			this->fNum->Text = L"Filtro numero";
+			this->fNum->UseVisualStyleBackColor = true;
+			this->fNum->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+			// 
+			// FSexo
+			// 
+			this->FSexo->Location = System::Drawing::Point(490, 29);
+			this->FSexo->Name = L"FSexo";
+			this->FSexo->Size = System::Drawing::Size(75, 23);
+			this->FSexo->TabIndex = 26;
+			this->FSexo->Text = L"Filtro Sexo";
+			this->FSexo->UseVisualStyleBackColor = true;
+			this->FSexo->Click += gcnew System::EventHandler(this, &MyForm::FSexo_Click);
+			// 
+			// FEdad
+			// 
+			this->FEdad->Location = System::Drawing::Point(584, 29);
+			this->FEdad->Name = L"FEdad";
+			this->FEdad->Size = System::Drawing::Size(75, 23);
+			this->FEdad->TabIndex = 27;
+			this->FEdad->Text = L"Filtro Edad";
+			this->FEdad->UseVisualStyleBackColor = true;
+			this->FEdad->Click += gcnew System::EventHandler(this, &MyForm::FEdad_Click);
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(5) { L"Nombre", L"Equipo", L"Sexo ", L"Edad", L"Numero" });
+			this->comboBox1->Location = System::Drawing::Point(538, 103);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(121, 21);
+			this->comboBox1->TabIndex = 28;
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(448, 106);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(63, 13);
+			this->label5->TabIndex = 29;
+			this->label5->Text = L"Ordenar por";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(810, 512);
-			this->Controls->Add(this->Table);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->comboBox1);
+			this->Controls->Add(this->FEdad);
+			this->Controls->Add(this->FSexo);
+			this->Controls->Add(this->fNum);
+			this->Controls->Add(this->FEquipo);
+			this->Controls->Add(this->TableF);
 			this->Controls->Add(this->textBox5);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
-			this->Controls->Add(this->Numero);
+			this->Controls->Add(this->LName);
 			this->Controls->Add(this->textBox4);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
-			this->Controls->Add(this->checkBox7);
-			this->Controls->Add(this->checkBox6);
-			this->Controls->Add(this->checkBox5);
-			this->Controls->Add(this->checkBox4);
-			this->Controls->Add(this->checkBox3);
-			this->Controls->Add(this->checkBox2);
-			this->Controls->Add(this->checkBox1);
-			this->Controls->Add(this->Filtros);
+			this->Controls->Add(this->FNombre);
 			this->Controls->Add(this->Eliminar);
 			this->Controls->Add(this->Insertar);
 			this->Name = L"MyForm";
@@ -377,22 +383,61 @@ namespace TF {
 		}
 #pragma endregion
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-
+		Nombre^ nombreForm = gcnew Nombre();
+		nombreForm->ShowDialog();
 	}
 
-private: System::Void Table_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void Insertar_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void Table_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void Insertar_Click(System::Object^ sender, System::EventArgs^ e) {
 
 
-	
 
 
-}
-private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void Insertar_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 
-}
-};
+	}
+	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void Insertar_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+
+	}
+	private: System::Void FEquipo_Click(System::Object^ sender, System::EventArgs^ e) {
+		Equipo^ equipo = gcnew Equipo();
+		equipo->ShowDialog();
+	}
+	private: System::Void FSexo_Click(System::Object^ sender, System::EventArgs^ e) {
+		Sexo^ sexo = gcnew Sexo();
+		sexo->ShowDialog();
+
+	}
+	private: System::Void FEdad_Click(System::Object^ sender, System::EventArgs^ e) {
+		Edad^ edad = gcnew Edad();
+		edad->ShowDialog();
+
+
+	}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		Numero^ num = gcnew Numero();
+		num->ShowDialog();
+
+	}
+	public: 
+	void LLenarTabla() {
+		vector<vector<string>> content = tabla->get_content();
+		TableF->Items->Clear();
+		for (int i = 0; i < content.size(); i++)
+		{
+			
+			ListViewItem^ item = gcnew ListViewItem();
+			
+			item->Text =gcnew String(content[i][0].c_str());
+			item->SubItems->Add(gcnew String(content[i][1].c_str()));
+			item->SubItems->Add(gcnew String(content[i][2].c_str()));
+			item->SubItems->Add(gcnew String(content[i][3].c_str()));
+			item->SubItems->Add(gcnew String(content[i][4].c_str()));
+			this->TableF->Items->Add(item);
+		}
+		
+	}
+	};
 }

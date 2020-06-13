@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 namespace TF {
 
@@ -19,13 +19,13 @@ namespace TF {
 		{
 			InitializeComponent();
 			//
-			//TODO: agregar código de constructor aquí
+			//TODO: agregar cï¿½digo de constructor aquï¿½
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Limpiar los recursos que se estén usando.
+		/// Limpiar los recursos que se estï¿½n usando.
 		/// </summary>
 		~Nombre()
 		{
@@ -34,26 +34,128 @@ namespace TF {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::CheckBox^ Inicia;
+
+	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::CheckBox^ Finaliza;
+	private: System::Windows::Forms::CheckBox^ Contiene;
+	private: System::Windows::Forms::CheckBox^ NOcontiene;
+
+
+
+	protected:
 
 	private:
 		/// <summary>
-		/// Variable del diseñador necesaria.
+		/// Variable del diseï¿½ador necesaria.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
+		/// Mï¿½todo necesario para admitir el Diseï¿½ador. No se puede modificar
+		/// el contenido de este mï¿½todo con el editor de cï¿½digo.
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"Nombre";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->Inicia = (gcnew System::Windows::Forms::CheckBox());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->Finaliza = (gcnew System::Windows::Forms::CheckBox());
+			this->Contiene = (gcnew System::Windows::Forms::CheckBox());
+			this->NOcontiene = (gcnew System::Windows::Forms::CheckBox());
+			this->SuspendLayout();
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(74, 96);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 0;
+			this->button1->Text = L"Aceptar";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Nombre::button1_Click);
+			// 
+			// Inicia
+			// 
+			this->Inicia->AutoSize = true;
+			this->Inicia->Location = System::Drawing::Point(37, 50);
+			this->Inicia->Name = L"Inicia";
+			this->Inicia->Size = System::Drawing::Size(72, 17);
+			this->Inicia->TabIndex = 1;
+			this->Inicia->Text = L"Inicia con";
+			this->Inicia->UseVisualStyleBackColor = true;
+			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(112, 24);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(100, 20);
+			this->textBox1->TabIndex = 2;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(19, 27);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(87, 13);
+			this->label1->TabIndex = 3;
+			this->label1->Text = L"Ingrese los datos";
+			// 
+			// Finaliza
+			// 
+			this->Finaliza->AutoSize = true;
+			this->Finaliza->Location = System::Drawing::Point(123, 50);
+			this->Finaliza->Name = L"Finaliza";
+			this->Finaliza->Size = System::Drawing::Size(82, 17);
+			this->Finaliza->TabIndex = 4;
+			this->Finaliza->Text = L"Finaliza con";
+			this->Finaliza->UseVisualStyleBackColor = true;
+			// 
+			// Contiene
+			// 
+			this->Contiene->AutoSize = true;
+			this->Contiene->Location = System::Drawing::Point(37, 73);
+			this->Contiene->Name = L"Contiene";
+			this->Contiene->Size = System::Drawing::Size(68, 17);
+			this->Contiene->TabIndex = 5;
+			this->Contiene->Text = L"Contiene";
+			this->Contiene->UseVisualStyleBackColor = true;
+			// 
+			// NOcontiene
+			// 
+			this->NOcontiene->AutoSize = true;
+			this->NOcontiene->Location = System::Drawing::Point(123, 73);
+			this->NOcontiene->Name = L"NOcontiene";
+			this->NOcontiene->Size = System::Drawing::Size(84, 17);
+			this->NOcontiene->TabIndex = 6;
+			this->NOcontiene->Text = L"No contiene";
+			this->NOcontiene->UseVisualStyleBackColor = true;
+			// 
+			// Nombre
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(229, 136);
+			this->Controls->Add(this->NOcontiene);
+			this->Controls->Add(this->Contiene);
+			this->Controls->Add(this->Finaliza);
+			this->Controls->Add(this->label1);
+			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->Inicia);
+			this->Controls->Add(this->button1);
+			this->Name = L"Nombre";
+			this->Text = L"Nombre";
+			this->ResumeLayout(false);
+			this->PerformLayout();
+
 		}
 #pragma endregion
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Close();
+	}
 	};
 }

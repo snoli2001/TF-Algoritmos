@@ -134,7 +134,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Codigo.cpp" />
     <ClCompile Include="Edad.cpp" />
     <ClCompile Include="Equipo.cpp" />
     <ClCompile Include="MyForm.cpp" />
@@ -143,12 +142,15 @@
     <ClCompile Include="Sexo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArbolVL.h" />
     <ClInclude Include="Edad.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Equipo.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="FuncionesArchivo.h" />
+    <ClInclude Include="FuncionesMenu.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -161,6 +163,7 @@
     <ClInclude Include="Sexo.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Tabla.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">

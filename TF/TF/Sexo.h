@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 namespace TF {
 
@@ -19,13 +19,14 @@ namespace TF {
 		{
 			InitializeComponent();
 			//
-			//TODO: agregar código de constructor aquí
+			//TODO: agregar cï¿½digo de constructor aquï¿½
 			//
+
 		}
 
 	protected:
 		/// <summary>
-		/// Limpiar los recursos que se estén usando.
+		/// Limpiar los recursos que se estï¿½n usando.
 		/// </summary>
 		~Sexo()
 		{
@@ -34,26 +35,93 @@ namespace TF {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::CheckBox^ Masculino;
+	private: System::Windows::Forms::CheckBox^ Femenino;
+	protected:
+
+
+	private: System::Windows::Forms::Button^ button1;
+	protected:
 
 	private:
 		/// <summary>
-		/// Variable del diseñador necesaria.
+		/// Variable del diseï¿½ador necesaria.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
+		/// Mï¿½todo necesario para admitir el Diseï¿½ador. No se puede modificar
+		/// el contenido de este mï¿½todo con el editor de cï¿½digo.
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"Sexo";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->Masculino = (gcnew System::Windows::Forms::CheckBox());
+			this->Femenino = (gcnew System::Windows::Forms::CheckBox());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->SuspendLayout();
+			// 
+			// Masculino
+			// 
+			this->Masculino->AutoSize = true;
+			this->Masculino->Location = System::Drawing::Point(31, 21);
+			this->Masculino->Name = L"Masculino";
+			this->Masculino->Size = System::Drawing::Size(74, 17);
+			this->Masculino->TabIndex = 0;
+			this->Masculino->Text = L"Masculino";
+			this->Masculino->UseVisualStyleBackColor = true;
+			this->Masculino->CheckedChanged += gcnew System::EventHandler(this, &Sexo::checkBox1_CheckedChanged);
+			// 
+			// Femenino
+			// 
+			this->Femenino->AutoSize = true;
+			this->Femenino->Location = System::Drawing::Point(31, 44);
+			this->Femenino->Name = L"Femenino";
+			this->Femenino->Size = System::Drawing::Size(72, 17);
+			this->Femenino->TabIndex = 1;
+			this->Femenino->Text = L"Femenino";
+			this->Femenino->UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(28, 67);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 2;
+			this->button1->Text = L"Aceptar";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Sexo::button1_Click);
+			// 
+			// Sexo
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(174, 112);
+			this->Controls->Add(this->button1);
+			this->Controls->Add(this->Femenino);
+			this->Controls->Add(this->Masculino);
+			this->Name = L"Sexo";
+			this->Text = L"Sexo";
+			this->ResumeLayout(false);
+			this->PerformLayout();
+
 		}
 #pragma endregion
+	private: System::Void checkBox1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Close();
+	}
+	public: String^ getSex(int& cont) {
+		if (Masculino->Checked == true) {
+			cont++;
+			return "M";
+		}
+		else if (Femenino->Checked == true)
+		{
+			cont++;
+			return "F";
+		}
+	}
 	};
 }
