@@ -23,27 +23,7 @@ Table* ordenarPorColumna(Table* objDataFrame, int columna)
 	return df;
 }
 
-Table* seleccionarColumnas(Table* objDataFrame)
-{
-	string datos;
-	cout << "\tColumnas a seleccionar [eg. 1,2,3]: ";
-	cin >> datos;
 
-	vector<int> columnas;
-
-	while (datos != "")
-	{
-		int fin = datos.find(',');
-		if (fin == -1) fin = datos.size();
-		columnas.push_back(stoi(datos.substr(0, fin)) - 1);
-		if (fin != datos.length())
-			datos = datos.substr(fin + 1);
-		else datos = "";
-	}
-
-	Table* df = objDataFrame->seleccionarColumnas(columnas);
-	return df;
-}
 
 void exportarDatos(Table* objDataFrame)
 {

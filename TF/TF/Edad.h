@@ -37,7 +37,7 @@ namespace TF {
 	private: System::Windows::Forms::CheckBox^ May;
 	private: System::Windows::Forms::CheckBox^ Menor;
 	protected:
-
+		int op;
 	private: System::Windows::Forms::CheckBox^ Igual;
 
 	private: System::Windows::Forms::Button^ button1;
@@ -80,6 +80,7 @@ namespace TF {
 			this->May->TabIndex = 0;
 			this->May->Text = L"Mayor que";
 			this->May->UseVisualStyleBackColor = true;
+			this->May->CheckedChanged += gcnew System::EventHandler(this, &Edad::May_CheckedChanged);
 			// 
 			// Menor
 			// 
@@ -90,6 +91,7 @@ namespace TF {
 			this->Menor->TabIndex = 1;
 			this->Menor->Text = L"Menor que";
 			this->Menor->UseVisualStyleBackColor = true;
+			this->Menor->CheckedChanged += gcnew System::EventHandler(this, &Edad::Menor_CheckedChanged);
 			// 
 			// Igual
 			// 
@@ -100,6 +102,7 @@ namespace TF {
 			this->Igual->TabIndex = 2;
 			this->Igual->Text = L"Igual que";
 			this->Igual->UseVisualStyleBackColor = true;
+			this->Igual->CheckedChanged += gcnew System::EventHandler(this, &Edad::Igual_CheckedChanged);
 			// 
 			// button1
 			// 
@@ -120,6 +123,7 @@ namespace TF {
 			this->Contiene->TabIndex = 4;
 			this->Contiene->Text = L"Contiene";
 			this->Contiene->UseVisualStyleBackColor = true;
+			this->Contiene->CheckedChanged += gcnew System::EventHandler(this, &Edad::Contiene_CheckedChanged);
 			// 
 			// NoContiene
 			// 
@@ -130,6 +134,7 @@ namespace TF {
 			this->NoContiene->TabIndex = 5;
 			this->NoContiene->Text = L"No contiene";
 			this->NoContiene->UseVisualStyleBackColor = true;
+			this->NoContiene->CheckedChanged += gcnew System::EventHandler(this, &Edad::NoContiene_CheckedChanged);
 			// 
 			// label1
 			// 
@@ -170,5 +175,103 @@ namespace TF {
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
-	};
+	private: System::Void Menor_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Menor->Checked) {
+			May->Enabled = false;
+			Igual->Enabled = false;
+			Contiene->Enabled = false;
+			NoContiene->Enabled = false;
+			op = 1;
+		}
+		else
+		{
+			May->Enabled = true;
+			Igual->Enabled = true;
+			Contiene->Enabled = true;
+			NoContiene->Enabled = true;
+			op = 0;
+
+		}
+	}
+	private: System::Void May_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Menor->Checked) {
+			May->Enabled = false;
+			Igual->Enabled = false;
+			Contiene->Enabled = false;
+			NoContiene->Enabled = false;
+			op = 2;
+		}
+		else
+		{
+			May->Enabled = true;
+			Igual->Enabled = true;
+			Contiene->Enabled = true;
+			NoContiene->Enabled = true;
+			op = 0;
+
+		}
+	}
+	private: System::Void Igual_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Igual->Checked) {
+			May->Enabled = false;
+			Menor->Enabled = false;
+			Contiene->Enabled = false;
+			NoContiene->Enabled = false;
+			op = 3;
+		}
+		else
+		{
+			May->Enabled = true;
+			Menor->Enabled = true;
+			Contiene->Enabled = true;
+			NoContiene->Enabled = true;
+			op = 0;
+
+		}
+	}
+	private: System::Void Contiene_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Contiene->Checked) {
+			May->Enabled = false;
+			Igual->Enabled = false;
+			Menor->Enabled = false;
+			NoContiene->Enabled = false;
+			op = 4;
+		}
+		else
+		{
+			May->Enabled = true;
+			Igual->Enabled = true;
+			Menor->Enabled = true;
+			NoContiene->Enabled = true;
+			op = 0;
+
+		}
+	}
+	private: System::Void NoContiene_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (NoContiene->Checked) {
+			May->Enabled = false;
+			Igual->Enabled = false;
+			Contiene->Enabled = false;
+			Menor->Enabled = false;
+			op = 5;
+		}
+		else
+		{
+			May->Enabled = true;
+			Igual->Enabled = true;
+			Contiene->Enabled = true;
+			Menor->Enabled = true;
+			op = 0;
+
+		}
+	}
+	public:
+		String^ getText() {
+			return textBox1->Text;
+		}
+		int getFiltro() {
+			return op;
+		}
+
+};
 }

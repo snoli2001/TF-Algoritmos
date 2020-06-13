@@ -396,6 +396,7 @@ namespace TF {
 			// 
 			// timer1
 			// 
+			this->timer1->Enabled = true;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
 			// 
 			// label7
@@ -506,22 +507,21 @@ namespace TF {
 		case 0:
 			break;
 		case 1:
-			actual = actual->Filtro_ComienzaCon(0, marshal_as<std::string>(equipo->getText()));
+			actual = actual->Filtro_ComienzaCon(1, marshal_as<std::string>(equipo->getText()));
 			cont++;
 			break;
 		case 2:
-			actual = actual->Filtro_TerminaCon(0, marshal_as<std::string>(equipo->getText()));
+			actual = actual->Filtro_TerminaCon(1, marshal_as<std::string>(equipo->getText()));
 			cont++;
 			break;
 		case 3:
-			actual = actual->Filtro_Contiene(0, marshal_as<std::string>(equipo->getText()));
+			actual = actual->Filtro_Contiene(1, marshal_as<std::string>(equipo->getText()));
 			cont++;
 			break;
 		case 4:
-			actual = actual->Filtro_No_Contiene(0, marshal_as<std::string>(equipo->getText()));
+			actual = actual->Filtro_No_Contiene(1, marshal_as<std::string>(equipo->getText()));
 			cont++;
 			break;
-
 
 		}
 
@@ -533,17 +533,83 @@ namespace TF {
 	private: System::Void FSexo_Click(System::Object^ sender, System::EventArgs^ e) {
 		Sexo^ sexo = gcnew Sexo();
 		sexo->ShowDialog();
+		switch (sexo->getop())
+		{
+		case 0:
+			break;
+		case 1:
+			actual = actual->Filtro_Contiene(2, marshal_as<std::string>(sexo->getSex()));
+			cont++;
+			break;
+
+		}
+		delete sexo;
+		LLenarTabla(actual);
+
 
 	}
 	private: System::Void FEdad_Click(System::Object^ sender, System::EventArgs^ e) {
 		Edad^ edad = gcnew Edad();
 		edad->ShowDialog();
+		switch (edad->getFiltro())
+		{
+		case 0:
+			break;
+		case 1:
+			actual = actual->Filtro_Menor_que(3, Convert::ToInt64(edad->getText()));
+			cont++;
+			break;
+		case 2:
+			actual = actual->Filtro_Mayor_que(3, Convert::ToInt64(edad->getText()));
+			cont++;
+			break;
+		case 3:
+			actual = actual->Filtro_Igual_que(3, marshal_as<std::string>(edad->getText()));
+			cont++;
+			break;
+		case 4:
+			actual = actual->Filtro_Contiene(3, marshal_as<std::string>(edad->getText()));
+			cont++;
+			break;
+		case 5:
+			actual = actual->Filtro_No_Contiene(3, marshal_as<std::string>(edad->getText()));
+			cont++;
+			break;
+
+		}
+
+
+		delete edad;
+		LLenarTabla(actual);
 
 
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		Numero^ num = gcnew Numero();
 		num->ShowDialog();
+		switch (num->getFiltro())
+		{
+		case 0:
+			break;
+		case 1:
+			actual = actual->Filtro_Menor_que(4, Convert::ToInt64(num->getText()));
+			cont++;
+			break;
+		case 2:
+			actual = actual->Filtro_Mayor_que(4, Convert::ToInt64(num->getText()));
+			cont++;
+			break;
+		case 3:
+			actual = actual->Filtro_Igual_que(4, marshal_as<std::string>(num->getText()));
+			cont++;
+			break;
+		
+
+		}
+
+
+		delete num;
+		LLenarTabla(actual);
 
 	}
 	public: 
@@ -567,19 +633,19 @@ namespace TF {
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 		
 		if (comboBox1->Text == "Nombre") {
-			actual = ordenarPorColumna(tabla, 1);
+			actual = ordenarPorColumna(actual, 1);
 		}
 		if (comboBox1->Text == "Equipo") {
-			actual = ordenarPorColumna(tabla, 2);
+			actual = ordenarPorColumna(actual, 2);
 		}
 		if (comboBox1->Text == "Sexo") {
-			actual = ordenarPorColumna(tabla, 3);
+			actual = ordenarPorColumna(actual, 3);
 		}
 		if (comboBox1->Text == "Edad") {
-			actual = ordenarPorColumna(tabla, 4);
+			actual = ordenarPorColumna(actual, 4);
 		}
 		if (comboBox1->Text == "Numero") {
-			actual = ordenarPorColumna(tabla, 5);
+			actual = ordenarPorColumna(actual, 5);
 		}
 		LLenarTabla(actual);
 		
@@ -613,7 +679,7 @@ private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) 
 		FEdad->Enabled = false;
 		fNum->Enabled = false;
 	}
-	label7->Text = gcnew String("Cantidad de filtro disponible: " + cont);
+	label7->Text = gcnew String("Cantidad de filtro disponible: " + (2-cont));
 }
 };
 }

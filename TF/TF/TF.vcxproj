@@ -166,6 +166,9 @@
     <ClInclude Include="Tabla.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Edad.resx">
+      <DependentUpon>Edad.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Equipo.resx">
       <DependentUpon>Equipo.h</DependentUpon>
     </EmbeddedResource>
@@ -174,6 +177,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Nombre.resx">
       <DependentUpon>Nombre.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Numero.resx">
+      <DependentUpon>Numero.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sexo.resx">
+      <DependentUpon>Sexo.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

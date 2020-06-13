@@ -42,7 +42,7 @@ namespace TF {
 
 	private: System::Windows::Forms::Button^ button1;
 	protected:
-
+		int op;
 	private:
 		/// <summary>
 		/// Variable del dise�ador necesaria.
@@ -81,6 +81,7 @@ namespace TF {
 			this->Femenino->TabIndex = 1;
 			this->Femenino->Text = L"Femenino";
 			this->Femenino->UseVisualStyleBackColor = true;
+			this->Femenino->CheckedChanged += gcnew System::EventHandler(this, &Sexo::Femenino_CheckedChanged);
 			// 
 			// button1
 			// 
@@ -108,20 +109,44 @@ namespace TF {
 		}
 #pragma endregion
 	private: System::Void checkBox1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Masculino->Checked) {
+			Femenino->Enabled = false;
+			op = 1;
+		}
+		else
+		{
+			Femenino->Enabled = true;
+			op = 0;
+		}
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
-	public: String^ getSex(int& cont) {
+	public: String^ getSex() {
 		if (Masculino->Checked == true) {
-			cont++;
+			
 			return "M";
 		}
 		else if (Femenino->Checked == true)
 		{
-			cont++;
+			
 			return "F";
 		}
 	}
-	};
+	public: int getop() {
+		return op;
+	}
+
+	private: System::Void Femenino_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Femenino->Checked) {
+			Masculino->Enabled = false;
+			op = 1;
+		}
+		else
+		{
+			Masculino->Enabled = true;
+			op = 0;
+		}
+	}
+};
 }

@@ -37,7 +37,7 @@ namespace TF {
 	private: System::Windows::Forms::CheckBox^ MAyor;
 	private: System::Windows::Forms::CheckBox^ Menor;
 	protected:
-
+		int op;
 	private: System::Windows::Forms::CheckBox^ Igual;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Label^ label1;
@@ -75,6 +75,7 @@ namespace TF {
 			this->MAyor->TabIndex = 0;
 			this->MAyor->Text = L"Mayor que";
 			this->MAyor->UseVisualStyleBackColor = true;
+			this->MAyor->CheckedChanged += gcnew System::EventHandler(this, &Numero::MAyor_CheckedChanged);
 			// 
 			// Menor
 			// 
@@ -96,6 +97,7 @@ namespace TF {
 			this->Igual->TabIndex = 2;
 			this->Igual->Text = L"Igual que";
 			this->Igual->UseVisualStyleBackColor = true;
+			this->Igual->CheckedChanged += gcnew System::EventHandler(this, &Numero::Igual_CheckedChanged);
 			// 
 			// button1
 			// 
@@ -142,13 +144,58 @@ namespace TF {
 		}
 #pragma endregion
 	private: System::Void checkBox2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Menor->Checked) {
+			MAyor->Enabled = false;
+			Igual->Enabled = false;
+			op = 1;
+		}
+		else
+		{
+			MAyor->Enabled = true;
+			Igual->Enabled = true;
+			op = 0;
+
+		}
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
-		   /*public: String^ get_dato() {
+		   
 
-		   }*/
+	private: System::Void MAyor_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (MAyor->Checked) {
+			Menor->Enabled = false;
+			Igual->Enabled = false;
+			op = 2;
+		}
+		else
+		{
+			Menor->Enabled = true;
+			Igual->Enabled = true;
+			op = 0;
 
-	};
+		}
+	}
+	private: System::Void Igual_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Igual->Checked) {
+			Menor->Enabled = false;
+			Menor->Enabled = false;
+			op = 3;
+		}
+		else
+		{
+			Menor->Enabled = true;
+			Menor->Enabled = true;
+			op = 0;
+
+		}
+	}
+	public:
+		String^ getText() {
+			return textBox1->Text;
+		}
+		int getFiltro() {
+			return op;
+		}
+};
 }
