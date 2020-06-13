@@ -1,7 +1,7 @@
 #pragma once
 #include "Tabla.h"
 
-Table* generarDataFrame()
+Table* generarTabla()
 {
 	string filename= "archivo.csv";
 	int filas, columnas;
@@ -9,18 +9,14 @@ Table* generarDataFrame()
 	return (new Table(filename));
 }
 
-Table* ordenarPorColumna(Table* objDataFrame)
+Table* ordenarPorColumna(Table* objDataFrame, int columna)
 {
-	int columna;
+	
 	string tipo;
-
-	cout << "\tOrdenar columnas Nro: ";
-	cin >> columna;
 
 	do
 	{
-		cout << "\tOrdenar de forma [ASC, DES]: ";
-		cin >> tipo;
+		tipo = "ASC";
 	} while (tipo != "ASC" &&tipo != "DES");
 
 	Table* df = objDataFrame->ordenar(columna - 1, tipo);

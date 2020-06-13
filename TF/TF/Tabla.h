@@ -39,6 +39,8 @@ public:
 
 	Table(vector<vector<string>> datos) : contenido(datos) {}
 
+	
+
 	Table* ordenar(int columna, string tipo)
 	{
 		ArbolAVL<vector<string>>* bt = new ArbolAVL<vector<string>>();
@@ -83,12 +85,12 @@ public:
 	{
 		if (isNum(contenido[0][columna]))
 		{
-			cout << "\tEntrada no valida: El valor en la posicion ingresada es un numero" << endl;
+			
 			return NULL;
 		}
 
 		vector<vector<string>> n_cuadro = contenido;
-		n_cuadro.erase(n_cuadro.begin() + 0);
+		
 
 		for (int i = n_cuadro.size() - 1; i >= 0; i--)
 		{
@@ -103,7 +105,7 @@ public:
 	{
 		if (isNum(contenido[0][columna]))
 		{
-			cout << "\tEntrada no valida: El valor en la posicion ingresada es un numero" << endl;
+			
 			return NULL;
 		}
 
@@ -123,7 +125,7 @@ public:
 	{
 		if (!isNum(contenido[0][columna]))
 		{
-			cout << "\tEntrada no valida: El valor en la posicion ingresada no es un numero" << endl;
+			
 			return NULL;
 		}
 
@@ -148,7 +150,7 @@ public:
 	{
 		if (!isNum(contenido[0][columna]))
 		{
-			cout << "\tEntrada no valida: El valor en la posicion ingresada no es un numero" << endl;
+			
 			return NULL;
 		}
 
@@ -212,8 +214,7 @@ public:
 	{
 		ofstream out;
 		out.open(filename);
-		if (!out.is_open()) cout << "\tOcurrio un error al tratar de abrir el archivo " + filename << endl;
-		else
+		if(out.is_open())
 		{
 			for (int i = 0; i < contenido.size() - 1; i++)
 			{
@@ -246,5 +247,9 @@ public:
 			cout << contenido[contenido.size() - 1][j] << setw(20);
 	}
 	bool generado() { return contenido.size() != 0; }
+
+	void insertar(vector<string> datos) {
+		contenido.push_back(datos);
+	}
 	
 };

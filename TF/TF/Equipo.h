@@ -42,7 +42,7 @@ namespace TF {
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Label^ label1;
 	protected:
-
+		int op;
 	private:
 		/// <summary>
 		/// Variable del dise�ador necesaria.
@@ -84,6 +84,7 @@ namespace TF {
 			this->Inicia->TabIndex = 1;
 			this->Inicia->Text = L"Inicia con";
 			this->Inicia->UseVisualStyleBackColor = true;
+			this->Inicia->CheckedChanged += gcnew System::EventHandler(this, &Equipo::Inicia_CheckedChanged);
 			// 
 			// Finaliza
 			// 
@@ -94,6 +95,7 @@ namespace TF {
 			this->Finaliza->TabIndex = 2;
 			this->Finaliza->Text = L"Finaliza con";
 			this->Finaliza->UseVisualStyleBackColor = true;
+			this->Finaliza->CheckedChanged += gcnew System::EventHandler(this, &Equipo::Finaliza_CheckedChanged);
 			// 
 			// Contiene
 			// 
@@ -104,6 +106,7 @@ namespace TF {
 			this->Contiene->TabIndex = 3;
 			this->Contiene->Text = L"Contiene";
 			this->Contiene->UseVisualStyleBackColor = true;
+			this->Contiene->CheckedChanged += gcnew System::EventHandler(this, &Equipo::Contiene_CheckedChanged);
 			// 
 			// Nocont
 			// 
@@ -114,6 +117,7 @@ namespace TF {
 			this->Nocont->TabIndex = 4;
 			this->Nocont->Text = L"No contiene";
 			this->Nocont->UseVisualStyleBackColor = true;
+			this->Nocont->CheckedChanged += gcnew System::EventHandler(this, &Equipo::Nocont_CheckedChanged);
 			// 
 			// textBox1
 			// 
@@ -153,5 +157,74 @@ namespace TF {
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
-	};
+	private: System::Void Inicia_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Inicia->Checked) {
+			Finaliza->Enabled = false;
+			Contiene->Enabled = false;
+			Nocont->Enabled = false;
+			op = 1;
+		}
+		else
+		{
+			Finaliza->Enabled = true;
+			Contiene->Enabled = true;
+			Nocont->Enabled = true;
+			op = 0;
+
+		}
+	}
+	private: System::Void Finaliza_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Finaliza->Checked) {
+			Inicia->Enabled = false;
+			Contiene->Enabled = false;
+			Nocont->Enabled = false;
+			op = 2;
+		}
+		else
+		{
+			Inicia->Enabled = true;
+			Contiene->Enabled = true;
+			Nocont->Enabled = true;
+			op = 0;
+		}
+	}
+	private: System::Void Contiene_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Contiene->Checked) {
+			Finaliza->Enabled = false;
+			Inicia->Enabled = false;
+			Nocont->Enabled = false;
+			op = 3;
+		}
+		else
+		{
+			Finaliza->Enabled = true;
+			Inicia->Enabled = true;
+			Nocont->Enabled = true;
+			op = 0;
+		}
+	}
+	private: System::Void Nocont_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (Nocont->Checked) {
+			Finaliza->Enabled = false;
+			Contiene->Enabled = false;
+			Inicia->Enabled = false;
+			op = 4;
+		}
+		else
+		{
+			Finaliza->Enabled = true;
+			Contiene->Enabled = true;
+			Inicia->Enabled = true;
+			op = 0;
+		}
+	}
+	public:
+	String^ getText() {
+	   return textBox1->Text;
+	}
+	int getFiltro() {
+	   return op;
+	}
+};
+
 }

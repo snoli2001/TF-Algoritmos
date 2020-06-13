@@ -11,6 +11,7 @@
 #include "FuncionesArchivo.h"
 #include "FuncionesMenu.h"
 
+using namespace msclr::interop;
 namespace TF {
 
 	using namespace System;
@@ -27,7 +28,13 @@ namespace TF {
 	{
 	private:
 		Table* tabla = NULL;
-
+		Table* actual = NULL;
+	private: System::Windows::Forms::Button^ VolverInicio;
+	private: System::Windows::Forms::TextBox^ tExportar;
+	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::Timer^ timer1;
+	private: System::Windows::Forms::Label^ label7;
+		   int cont;
 
 	public:
 		MyForm(void)
@@ -38,8 +45,10 @@ namespace TF {
 			//
 			if (tabla != NULL)
 				delete tabla;
-			tabla = generarDataFrame();
-			LLenarTabla();
+			tabla = generarTabla();
+			LLenarTabla(tabla);
+			actual = tabla;
+			cont = 0;
 		}
 
 	protected:
@@ -54,8 +63,9 @@ namespace TF {
 			}
 		}
 	private: System::Windows::Forms::Button^ Insertar;
+	private: System::Windows::Forms::Button^ Exportar;
 	protected:
-	private: System::Windows::Forms::Button^ Eliminar;
+
 	private: System::Windows::Forms::Button^ FNombre;
 
 
@@ -95,13 +105,14 @@ namespace TF {
 	private: System::Windows::Forms::Button^ FEdad;
 	private: System::Windows::Forms::ComboBox^ comboBox1;
 	private: System::Windows::Forms::Label^ label5;
+	private: System::ComponentModel::IContainer^ components;
 
 
 	private:
 		/// <summary>
 		/// Variable del dise�ador necesaria.
 		/// </summary>
-		System::ComponentModel::Container^ components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -110,8 +121,9 @@ namespace TF {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->Insertar = (gcnew System::Windows::Forms::Button());
-			this->Eliminar = (gcnew System::Windows::Forms::Button());
+			this->Exportar = (gcnew System::Windows::Forms::Button());
 			this->FNombre = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
@@ -135,6 +147,11 @@ namespace TF {
 			this->FEdad = (gcnew System::Windows::Forms::Button());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->VolverInicio = (gcnew System::Windows::Forms::Button());
+			this->tExportar = (gcnew System::Windows::Forms::TextBox());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// Insertar
@@ -148,14 +165,15 @@ namespace TF {
 			this->Insertar->Click += gcnew System::EventHandler(this, &MyForm::Insertar_Click);
 			this->Insertar->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::Insertar_MouseUp);
 			// 
-			// Eliminar
+			// Exportar
 			// 
-			this->Eliminar->Location = System::Drawing::Point(66, 262);
-			this->Eliminar->Name = L"Eliminar";
-			this->Eliminar->Size = System::Drawing::Size(75, 23);
-			this->Eliminar->TabIndex = 1;
-			this->Eliminar->Text = L"Eliminar";
-			this->Eliminar->UseVisualStyleBackColor = true;
+			this->Exportar->Location = System::Drawing::Point(448, 189);
+			this->Exportar->Name = L"Exportar";
+			this->Exportar->Size = System::Drawing::Size(184, 23);
+			this->Exportar->TabIndex = 1;
+			this->Exportar->Text = L"Exportar tabla actual";
+			this->Exportar->UseVisualStyleBackColor = true;
+			this->Exportar->Click += gcnew System::EventHandler(this, &MyForm::Exportar_Click);
 			// 
 			// FNombre
 			// 
@@ -335,25 +353,69 @@ namespace TF {
 			// 
 			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(5) { L"Nombre", L"Equipo", L"Sexo ", L"Edad", L"Numero" });
-			this->comboBox1->Location = System::Drawing::Point(538, 103);
+			this->comboBox1->Location = System::Drawing::Point(520, 77);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(121, 21);
 			this->comboBox1->TabIndex = 28;
+			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::comboBox1_SelectedIndexChanged);
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(448, 106);
+			this->label5->Location = System::Drawing::Point(432, 78);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(63, 13);
 			this->label5->TabIndex = 29;
 			this->label5->Text = L"Ordenar por";
+			// 
+			// VolverInicio
+			// 
+			this->VolverInicio->Location = System::Drawing::Point(458, 104);
+			this->VolverInicio->Name = L"VolverInicio";
+			this->VolverInicio->Size = System::Drawing::Size(135, 23);
+			this->VolverInicio->TabIndex = 30;
+			this->VolverInicio->Text = L"Volver al Inicio";
+			this->VolverInicio->UseVisualStyleBackColor = true;
+			this->VolverInicio->Click += gcnew System::EventHandler(this, &MyForm::VolverInicio_Click);
+			// 
+			// tExportar
+			// 
+			this->tExportar->Location = System::Drawing::Point(490, 163);
+			this->tExportar->Name = L"tExportar";
+			this->tExportar->Size = System::Drawing::Size(100, 20);
+			this->tExportar->TabIndex = 31;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(369, 147);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(339, 13);
+			this->label6->TabIndex = 32;
+			this->label6->Text = L"Ingrese el nombre del archivo de exportacion(incluya extension ejm.txt)";
+			// 
+			// timer1
+			// 
+			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(455, 13);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(144, 13);
+			this->label7->TabIndex = 33;
+			this->label7->Text = L"Cantidad de filtros restante: 2";
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(810, 512);
+			this->Controls->Add(this->label7);
+			this->Controls->Add(this->label6);
+			this->Controls->Add(this->tExportar);
+			this->Controls->Add(this->VolverInicio);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->FEdad);
@@ -372,7 +434,7 @@ namespace TF {
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->FNombre);
-			this->Controls->Add(this->Eliminar);
+			this->Controls->Add(this->Exportar);
 			this->Controls->Add(this->Insertar);
 			this->Name = L"MyForm";
 			this->Text = L"Mini-SGDB";
@@ -385,18 +447,53 @@ namespace TF {
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
 		Nombre^ nombreForm = gcnew Nombre();
 		nombreForm->ShowDialog();
+		switch (nombreForm->getFiltro())
+		{
+		case 0:
+			break;
+		case 1:
+			actual = actual->Filtro_ComienzaCon(0,marshal_as<std::string>(nombreForm->getText()));
+			cont++;
+			break;
+		case 2:
+			actual = actual->Filtro_TerminaCon(0, marshal_as<std::string>(nombreForm->getText()));
+			cont++;
+			break;
+		case 3:
+			actual = actual->Filtro_Contiene(0, marshal_as<std::string>(nombreForm->getText()));
+			cont++;
+			break;
+		case 4:
+			actual = actual->Filtro_No_Contiene(0, marshal_as<std::string>(nombreForm->getText()));
+			cont++;
+			break;
+		
+
+		}
+		
+
+		delete nombreForm;
+		LLenarTabla(actual);
+		
 	}
 
 	private: System::Void Table_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		
 	}
 	private: System::Void Insertar_Click(System::Object^ sender, System::EventArgs^ e) {
-
-
-
-
+		vector<string> nuevo;
+		nuevo.push_back(marshal_as<std::string>(textBox1->Text));
+		nuevo.push_back(marshal_as<std::string>(textBox2->Text));
+		nuevo.push_back(marshal_as<std::string>(textBox3->Text));
+		nuevo.push_back(marshal_as<std::string>(textBox4->Text));
+		nuevo.push_back(marshal_as<std::string>(textBox5->Text));
+		tabla->insertar(nuevo);
+		actual = tabla;
+		LLenarTabla(actual);
 
 	}
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+
 	}
 	private: System::Void Insertar_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 
@@ -404,6 +501,34 @@ namespace TF {
 	private: System::Void FEquipo_Click(System::Object^ sender, System::EventArgs^ e) {
 		Equipo^ equipo = gcnew Equipo();
 		equipo->ShowDialog();
+		switch (equipo->getFiltro())
+		{
+		case 0:
+			break;
+		case 1:
+			actual = actual->Filtro_ComienzaCon(0, marshal_as<std::string>(equipo->getText()));
+			cont++;
+			break;
+		case 2:
+			actual = actual->Filtro_TerminaCon(0, marshal_as<std::string>(equipo->getText()));
+			cont++;
+			break;
+		case 3:
+			actual = actual->Filtro_Contiene(0, marshal_as<std::string>(equipo->getText()));
+			cont++;
+			break;
+		case 4:
+			actual = actual->Filtro_No_Contiene(0, marshal_as<std::string>(equipo->getText()));
+			cont++;
+			break;
+
+
+		}
+
+
+		delete equipo;
+		LLenarTabla(actual);
+
 	}
 	private: System::Void FSexo_Click(System::Object^ sender, System::EventArgs^ e) {
 		Sexo^ sexo = gcnew Sexo();
@@ -422,8 +547,8 @@ namespace TF {
 
 	}
 	public: 
-	void LLenarTabla() {
-		vector<vector<string>> content = tabla->get_content();
+	void LLenarTabla(Table* tablita) {
+		vector<vector<string>> content = tablita->get_content();
 		TableF->Items->Clear();
 		for (int i = 0; i < content.size(); i++)
 		{
@@ -439,5 +564,56 @@ namespace TF {
 		}
 		
 	}
-	};
+	private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		
+		if (comboBox1->Text == "Nombre") {
+			actual = ordenarPorColumna(tabla, 1);
+		}
+		if (comboBox1->Text == "Equipo") {
+			actual = ordenarPorColumna(tabla, 2);
+		}
+		if (comboBox1->Text == "Sexo") {
+			actual = ordenarPorColumna(tabla, 3);
+		}
+		if (comboBox1->Text == "Edad") {
+			actual = ordenarPorColumna(tabla, 4);
+		}
+		if (comboBox1->Text == "Numero") {
+			actual = ordenarPorColumna(tabla, 5);
+		}
+		LLenarTabla(actual);
+		
+
+	}
+	private: System::Void VolverInicio_Click(System::Object^ sender, System::EventArgs^ e) {
+		actual = tabla;
+		LLenarTabla(actual);
+		cont = 0;
+		FNombre->Enabled = true;
+		FEquipo->Enabled = true;
+		FSexo->Enabled = true;
+		FEdad->Enabled = true;
+		fNum->Enabled = true;
+	}
+private: System::Void Exportar_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (tExportar->Text != "") {
+		actual->exportar(marshal_as<std::string>(tExportar->Text));
+	}
+	else
+	{
+		MessageBox::Show("Ingrese un nombre para el archivo");
+	}
+	
+}
+private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
+	if (cont == 2) {
+		FNombre->Enabled = false;
+		FEquipo->Enabled = false;
+		FSexo->Enabled = false;
+		FEdad->Enabled = false;
+		fNum->Enabled = false;
+	}
+	label7->Text = gcnew String("Cantidad de filtro disponible: " + cont);
+}
+};
 }
