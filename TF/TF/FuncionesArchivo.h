@@ -4,16 +4,6 @@
 #include <string>
 using namespace std;
 
-void quitarEspacios(string& cadena)
-{
-	/*
-	int posicion = 0;
-	while (cadena.at(posicion) == '')
-		posicion++;
-	cadena = cadena.substr(posicion, cadena.size());
-    */
-}
-
 int NroColumnas(ifstream & in, char separador)
 {
 	string line;
