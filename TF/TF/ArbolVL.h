@@ -8,8 +8,8 @@ template <typename T>
 struct Nodo
 {
 	T data;
-	Nodo* left = nullptr;
-	Nodo* right = nullptr;
+	Nodo* izq = nullptr;
+	Nodo* der = nullptr;
 	int altura_xd = 0;
 	Nodo(T data) : data(data) {}
 };
@@ -21,14 +21,14 @@ class ArbolAVL
 	void _rotar_right(Nodo<T>* x, Nodo<T>*& y, Nodo<T>*& z)
 	{
 		z = y;
-		x->right = y->left;
-		z->left = x;
+		x->der = y->izq;
+		z->izq = x;
 	}
 	void _rotar_left(Nodo<T>*& x, Nodo<T>* y, Nodo<T>*& z)
 	{
 		z = x;
-		y->left = x->right;
-		z->right = y;
+		y->izq = x->der;
+		z->der = y;
 	}
 	int _update(Nodo<T>* nodo)
 	{
@@ -46,44 +46,44 @@ class ArbolAVL
 		else
 			if (f(e, nodo->data))
 			{
-				_agregar(nodo->left, e, f);
+				_agregar(nodo->izq, e, f);
 			}
 			else
 			{
-				_agregar(nodo->right, e, f);
+				_agregar(nodo->der, e, f);
 			}
-		int hl = _update(nodo->left);
-		int hr = _update(nodo->right);
+		int hl = _update(nodo->izq);
+		int hr = _update(nodo->der);
 		int dif = hr - hl;
 		if (dif > 1)
 		{
-			int tl = _update(nodo->right->left);
-			int tr = _update(nodo->right->right);
+			int tl = _update(nodo->der->izq);
+			int tr = _update(nodo->der->der);
 			if (tl > tr)
 			{
-				_rotar_right(nodo->right->left, nodo->right, nodo->right);
+				_rotar_right(nodo->der->izq, nodo->der, nodo->der);
 			}
-			_rotar_left(nodo, nodo->right, nodo);
+			_rotar_left(nodo, nodo->der, nodo);
 		}
 		else
 			if (dif < -1)
 			{
-				int tl = _update(nodo->left->left);
-				int tr = _update(nodo->left->right);
+				int tl = _update(nodo->izq->izq);
+				int tr = _update(nodo->izq->der);
 				if (tr > tl)
 				{
-					_rotar_left(nodo->left, nodo->left->right, nodo->left);
+					_rotar_left(nodo->izq, nodo->izq->der, nodo->izq);
 				}
-				_rotar_right(nodo->left, nodo, nodo);
+				_rotar_right(nodo->izq, nodo, nodo);
 			}
 
 	}
 	void _inOrder(Nodo<T>* nodo, vector<T> & v)
 	{
 		if (nodo == NULL) return;
-		_inOrder(nodo->left, v);
+		_inOrder(nodo->izq, v);
 		v.push_back(nodo->data);
-		_inOrder(nodo->right, v);
+		_inOrder(nodo->der, v);
 	}
 
 	T _search(Nodo<T>*nodo, T e, function<bool(T, T)>f)
@@ -94,22 +94,22 @@ class ArbolAVL
 			return nodo->data;
 		else
 		{
-			return _search(f(e, nodo->data)>0 ? nodo->right : nodo->left, e, f);
+			return _search(f(e, nodo->data)>0 ? nodo->der : nodo->izq, e, f);
 		}
 	}
 	Nodo<T> _remove_min(Nodo<T>* nodo, Nodo<T>*& link)
 	{
 		if (nodo == nullptr)
 			return nullptr;
-		if (nodo->left == nullptr)
+		if (nodo->izq == nullptr)
 		{
-			link = nodo->right;
-			nodo->right = nullptr;
+			link = nodo->der;
+			nodo->der = nullptr;
 			return nodo;
 		}
 		else
 		{
-			return _remove_min(nodo->left, nodo->left);
+			return _remove_min(nodo->izq, nodo->izq);
 		}
 
 	}
@@ -117,23 +117,23 @@ class ArbolAVL
 	{
 		if (nodo == nullptr)
 			return nullptr;
-		if (nodo->right == nullptr)
+		if (nodo->der == nullptr)
 		{
-			link = nodo->left;
-			nodo->left = nullptr;
+			link = nodo->izq;
+			nodo->izq = nullptr;
 			return nodo;
 		}
 		else
 		{
-			return _remove_max(nodo->right, nodo->right);
+			return _remove_max(nodo->der, nodo->der);
 		}
 	}
 	int _remove(Nodo<T>*nodo, Nodo<T>*& link, T e, function <bool(T, T)> f)
 	{
 		if (f(e, nodo->data))
 		{
-			int hl = _update(nodo->left);
-			int hr = _update(nodo->right);
+			int hl = _update(nodo->izq);
+			int hr = _update(nodo->der);
 			if (hl == -1 & hr == -1)
 			{
 				link = nullptr;
@@ -142,30 +142,30 @@ class ArbolAVL
 			else
 				if (hl > hr)
 				{
-					Nodo<T>* temp = _remove_max(nodo->left, nodo->left);
-					temp->left = nodo->left;
-					temp->right = nodo->right;
+					Nodo<T>* temp = _remove_max(nodo->izq, nodo->izq);
+					temp->izq = nodo->izq;
+					temp->der = nodo->der;
 					link = temp;
 					delete nodo;
 				}
 				else
 				{
-					Nodo<T>* temp = _remove_min(nodo->right, nodo->right);
-					temp->left = nodo->left;
-					temp->right = nodo->right;
+					Nodo<T>* temp = _remove_min(nodo->der, nodo->der);
+					temp->izq = nodo->izq;
+					temp->der = nodo->der;
 					link = temp;
 					delete nodo;
 				}
 		}
 		else
-			if (f(e, nodo->data) && nodo->right != nullptr)
+			if (f(e, nodo->data) && nodo->der != nullptr)
 			{
-				return _remove(nodo->right, nodo->right, e, f);
+				return _remove(nodo->der, nodo->der, e, f);
 			}
 			else
-				if (f(e, nodo->data) && nodo->left != nullptr)
+				if (f(e, nodo->data) && nodo->izq != nullptr)
 				{
-					return _remove(nodo->left, nodo->left, e, f);
+					return _remove(nodo->izq, nodo->izq, e, f);
 				}
 	}
 public:
