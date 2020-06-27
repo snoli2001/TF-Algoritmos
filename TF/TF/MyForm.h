@@ -8,7 +8,6 @@
 #include "Numero.h"
 #include "Sexo.h"
 #include "Tabla.h"
-#include "FuncionesArchivo.h"
 #include "FuncionesMenu.h"
 
 using namespace msclr::interop;

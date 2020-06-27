@@ -56,9 +56,6 @@
     <ClInclude Include="ArbolVL.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="FuncionesArchivo.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="FuncionesMenu.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
