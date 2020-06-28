@@ -33,6 +33,13 @@ namespace TF {
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::Timer^ timer1;
 	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::Label^ label8;
+	private: System::Windows::Forms::TextBox^ ImportText;
+
+
+	private: System::Windows::Forms::Button^ Importar;
+	private: System::Windows::Forms::ComboBox^ OrdCombo;
+
 		   int cont;
 
 	public:
@@ -44,9 +51,7 @@ namespace TF {
 			//
 			if (tabla != NULL)
 				delete tabla;
-			tabla = generarTabla();
-			LLenarTabla(tabla);
-			actual = tabla;
+			OrdCombo->Text = "Ascendente";
 			cont = 0;
 		}
 
@@ -151,6 +156,10 @@ namespace TF {
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->ImportText = (gcnew System::Windows::Forms::TextBox());
+			this->Importar = (gcnew System::Windows::Forms::Button());
+			this->OrdCombo = (gcnew System::Windows::Forms::ComboBox());
 			this->SuspendLayout();
 			// 
 			// Insertar
@@ -166,7 +175,7 @@ namespace TF {
 			// 
 			// Exportar
 			// 
-			this->Exportar->Location = System::Drawing::Point(448, 189);
+			this->Exportar->Location = System::Drawing::Point(435, 182);
 			this->Exportar->Name = L"Exportar";
 			this->Exportar->Size = System::Drawing::Size(184, 23);
 			this->Exportar->TabIndex = 1;
@@ -379,15 +388,15 @@ namespace TF {
 			// 
 			// tExportar
 			// 
-			this->tExportar->Location = System::Drawing::Point(490, 163);
+			this->tExportar->Location = System::Drawing::Point(464, 156);
 			this->tExportar->Name = L"tExportar";
-			this->tExportar->Size = System::Drawing::Size(100, 20);
+			this->tExportar->Size = System::Drawing::Size(129, 20);
 			this->tExportar->TabIndex = 31;
 			// 
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(369, 147);
+			this->label6->Location = System::Drawing::Point(368, 140);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(339, 13);
 			this->label6->TabIndex = 32;
@@ -407,11 +416,52 @@ namespace TF {
 			this->label7->TabIndex = 33;
 			this->label7->Text = L"Cantidad de filtros restante: 2";
 			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(12, 242);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(250, 13);
+			this->label8->TabIndex = 34;
+			this->label8->Text = L"Ingrese el nombre del archivo a importar (.csv o .txt)";
+			this->label8->Click += gcnew System::EventHandler(this, &MyForm::label8_Click);
+			// 
+			// ImportText
+			// 
+			this->ImportText->Location = System::Drawing::Point(77, 268);
+			this->ImportText->Name = L"ImportText";
+			this->ImportText->Size = System::Drawing::Size(100, 20);
+			this->ImportText->TabIndex = 35;
+			// 
+			// Importar
+			// 
+			this->Importar->Location = System::Drawing::Point(90, 294);
+			this->Importar->Name = L"Importar";
+			this->Importar->Size = System::Drawing::Size(75, 23);
+			this->Importar->TabIndex = 36;
+			this->Importar->Text = L"Importar";
+			this->Importar->UseVisualStyleBackColor = true;
+			this->Importar->Click += gcnew System::EventHandler(this, &MyForm::Importar_Click);
+			// 
+			// OrdCombo
+			// 
+			this->OrdCombo->FormattingEnabled = true;
+			this->OrdCombo->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Ascendente", L"Descendente" });
+			this->OrdCombo->Location = System::Drawing::Point(662, 77);
+			this->OrdCombo->Name = L"OrdCombo";
+			this->OrdCombo->Size = System::Drawing::Size(101, 21);
+			this->OrdCombo->TabIndex = 37;
+			this->OrdCombo->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::OrdCombo_SelectedIndexChanged);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(810, 512);
+			this->Controls->Add(this->OrdCombo);
+			this->Controls->Add(this->Importar);
+			this->Controls->Add(this->ImportText);
+			this->Controls->Add(this->label8);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->tExportar);
@@ -630,23 +680,32 @@ namespace TF {
 		
 	}
 	private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+
+		if (TableF->Items->Count != 0) {
+			string tipo = marshal_as<std::string>(OrdCombo->Text);
+
+			tipo = tipo == "Ascendente" ? "ASC" : "DESC";
+
+
+			if (comboBox1->Text == "Nombre") {
+				actual = ordenarPorColumna(actual, 1, tipo);
+			}
+			if (comboBox1->Text == "Equipo") {
+				actual = ordenarPorColumna(actual, 2, tipo);
+			}
+			if (comboBox1->Text == "Sexo") {
+				actual = ordenarPorColumna(actual, 3, tipo);
+			}
+			if (comboBox1->Text == "Edad") {
+				actual = ordenarPorColumna(actual, 4, tipo);
+			}
+			if (comboBox1->Text == "Numero") {
+				actual = ordenarPorColumna(actual, 5, tipo);
+			}
+
+			LLenarTabla(actual);
+		}
 		
-		if (comboBox1->Text == "Nombre") {
-			actual = ordenarPorColumna(actual, 1);
-		}
-		if (comboBox1->Text == "Equipo") {
-			actual = ordenarPorColumna(actual, 2);
-		}
-		if (comboBox1->Text == "Sexo") {
-			actual = ordenarPorColumna(actual, 3);
-		}
-		if (comboBox1->Text == "Edad") {
-			actual = ordenarPorColumna(actual, 4);
-		}
-		if (comboBox1->Text == "Numero") {
-			actual = ordenarPorColumna(actual, 5);
-		}
-		LLenarTabla(actual);
 		
 
 	}
@@ -679,6 +738,42 @@ private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) 
 		fNum->Enabled = false;
 	}
 	label7->Text = gcnew String("Cantidad de filtro disponible: " + (2-cont));
+}
+private: System::Void label8_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void Importar_Click(System::Object^ sender, System::EventArgs^ e) {
+	string filename = marshal_as<std::string>(ImportText->Text);
+	tabla = generarTabla(filename);
+	LLenarTabla(tabla);
+	actual = tabla;
+}
+private: System::Void OrdCombo_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (comboBox1->Text != "" && TableF->Items->Count != 0) {
+		string tipo = marshal_as<std::string>(OrdCombo->Text);
+
+		tipo = tipo == "Ascendente" ? "ASC" : "DESC";
+
+
+		if (comboBox1->Text == "Nombre") {
+			actual = ordenarPorColumna(actual, 1, tipo);
+		}
+		if (comboBox1->Text == "Equipo") {
+			actual = ordenarPorColumna(actual, 2, tipo);
+		}
+		if (comboBox1->Text == "Sexo") {
+			actual = ordenarPorColumna(actual, 3, tipo);
+		}
+		if (comboBox1->Text == "Edad") {
+			actual = ordenarPorColumna(actual, 4, tipo);
+		}
+		if (comboBox1->Text == "Numero") {
+			actual = ordenarPorColumna(actual, 5, tipo);
+		}
+
+		LLenarTabla(actual);
+	}
+	
+
 }
 };
 }
