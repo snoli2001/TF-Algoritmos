@@ -53,6 +53,11 @@ namespace TF {
 				delete tabla;
 			OrdCombo->Text = "Ascendente";
 			cont = 0;
+			FNombre->Enabled = false;
+			FSexo->Enabled = false;
+			FEquipo->Enabled = false;
+			FEdad->Enabled = false;
+			fNum->Enabled = false;
 		}
 
 	protected:
@@ -746,6 +751,11 @@ private: System::Void Importar_Click(System::Object^ sender, System::EventArgs^ 
 	tabla = generarTabla(filename);
 	LLenarTabla(tabla);
 	actual = tabla;
+	FNombre->Enabled = true;
+	FSexo->Enabled = true;
+	FEquipo->Enabled = true;
+	FEdad->Enabled = true;
+	fNum->Enabled = true;
 }
 private: System::Void OrdCombo_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 	if (comboBox1->Text != "" && TableF->Items->Count != 0) {
