@@ -239,18 +239,7 @@ public:
 	vector<vector<string>> get_content() {
 		return contenido;
 	}
-	void print()
-	{
-		for (int i = 0; i < contenido.size() - 1; i++)
-		{
-			for (int j = 0; j < contenido[i].size(); j++)
-				cout << contenido[i][j] << setw(20);
-			cout << endl;
-		}
-
-		for (int j = 0; j < contenido[contenido.size() - 1].size(); j++)
-			cout << contenido[contenido.size() - 1][j] << setw(20);
-	}
+	
 	bool generado() { return contenido.size() != 0; }
 
 	void insertar(vector<string> datos) {
