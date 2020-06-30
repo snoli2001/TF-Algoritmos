@@ -536,15 +536,26 @@ namespace TF {
 		
 	}
 	private: System::Void Insertar_Click(System::Object^ sender, System::EventArgs^ e) {
+		
 		vector<string> nuevo;
 		nuevo.push_back(marshal_as<std::string>(textBox1->Text));
 		nuevo.push_back(marshal_as<std::string>(textBox2->Text));
 		nuevo.push_back(marshal_as<std::string>(textBox3->Text));
 		nuevo.push_back(marshal_as<std::string>(textBox4->Text));
 		nuevo.push_back(marshal_as<std::string>(textBox5->Text));
-		tabla->insertar(nuevo);
+		if (tabla == NULL) {
+			vector<vector<string>> nuevaTabla;
+			nuevaTabla.push_back(nuevo);
+			tabla = new Table(nuevaTabla);
+		}
+		else
+		{
+			tabla->insertar(nuevo);
+			
+		}
 		actual = tabla;
 		LLenarTabla(actual);
+		
 
 	}
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
