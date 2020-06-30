@@ -17,7 +17,9 @@ struct Nodo
 template <class T>
 class ArbolAVL
 {
+private:
 	Nodo<T>* raiz;
+private:
 	void _rotar_right(Nodo<T>* x, Nodo<T>*& y, Nodo<T>*& z)
 	{
 		z = y;
@@ -30,7 +32,7 @@ class ArbolAVL
 		y->izq = x->der;
 		z->der = y;
 	}
-	int _update(Nodo<T>* nodo)
+	int _calcularAltura(Nodo<T>* nodo)
 	{
 		if (nodo == nullptr)
 			return -1;
@@ -52,13 +54,13 @@ class ArbolAVL
 			{
 				_agregar(nodo->der, e, f);
 			}
-		int hl = _update(nodo->izq);
-		int hr = _update(nodo->der);
+		int hl = _calcularAltura(nodo->izq);
+		int hr = _calcularAltura(nodo->der);
 		int dif = hr - hl;
 		if (dif > 1)
 		{
-			int tl = _update(nodo->der->izq);
-			int tr = _update(nodo->der->der);
+			int tl = _calcularAltura(nodo->der->izq);
+			int tr = _calcularAltura(nodo->der->der);
 			if (tl > tr)
 			{
 				_rotar_right(nodo->der->izq, nodo->der, nodo->der);
@@ -68,8 +70,8 @@ class ArbolAVL
 		else
 			if (dif < -1)
 			{
-				int tl = _update(nodo->izq->izq);
-				int tr = _update(nodo->izq->der);
+				int tl = _calcularAltura(nodo->izq->izq);
+				int tr = _calcularAltura(nodo->izq->der);
 				if (tr > tl)
 				{
 					_rotar_left(nodo->izq, nodo->izq->der, nodo->izq);
@@ -128,12 +130,12 @@ class ArbolAVL
 			return _remove_max(nodo->der, nodo->der);
 		}
 	}
-	int _remove(Nodo<T>*nodo, Nodo<T>*& link, T e, function <bool(T, T)> f)
+	void _remove(Nodo<T>*nodo, Nodo<T>*& link, T e, function <bool(T, T)> f)
 	{
 		if (f(e, nodo->data))
 		{
-			int hl = _update(nodo->izq);
-			int hr = _update(nodo->der);
+			int hl = _calcularAltura(nodo->izq);
+			int hr = _calcularAltura(nodo->der);
 			if (hl == -1 & hr == -1)
 			{
 				link = nullptr;
@@ -172,7 +174,7 @@ public:
 	ArbolAVL() : raiz(nullptr) {}
 	void agregar(T e, function<bool(T&, T&)> f) { _agregar(raiz, e, f); }
 	void inOrder(vector<T> & v) { _inOrder(raiz, v); }
-	int update() { _update(raiz); }
+	int calcularAltura() { _calcularAltura(raiz); }
 	T buscar(T e, function<bool(T&, T&)>f) { return _search(raiz, e, f); }
-	int remove(T e, function<bool(T&, T&)>f) { return _remove(e, raiz, raiz, f); }
+	void remove(T e, function<bool(T&, T&)>f) { return _remove(e, raiz, raiz, f); }
 };
