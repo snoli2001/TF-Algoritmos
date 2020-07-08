@@ -1,0 +1,8 @@
+﻿  TestArbolAVL.cpp
+E:\2020-01\algoritmia\EF\Moldes\ArbolAVLVector\ArbolAVL\TestArbolAVL.cpp(9,20): warning C4018: '<': no coinciden signed/unsigned
+E:\2020-01\algoritmia\EF\Moldes\ArbolAVLVector\ArbolAVL\TestArbolAVL.cpp(54,12): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+E:\2020-01\algoritmia\EF\Moldes\ArbolAVLVector\ArbolAVL\TestArbolAVL.cpp(85,22): warning C4018: '<': no coinciden signed/unsigned
+E:\2020-01\algoritmia\EF\Moldes\ArbolAVLVector\ArbolAVL\TestArbolAVL.cpp(96,22): warning C4018: '<': no coinciden signed/unsigned
+E:\2020-01\algoritmia\EF\Moldes\ArbolAVLVector\ArbolAVL\TestArbolAVL.cpp(135,22): warning C4018: '<': no coinciden signed/unsigned
+  TestArbolAVL.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
+  ArbolAVL.vcxproj -> E:\2020-01\algoritmia\EF\Moldes\ArbolAVLVector\Debug\ArbolAVL.exe
